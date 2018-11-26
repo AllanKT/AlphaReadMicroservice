@@ -1,0 +1,14 @@
+arvore
+cadeira
+caderno
+carro
+casa
+celular
+guarda chuva
+mesa
+mochila
+monitor
+mouse
+onibus
+porta
+teclado

@@ -1,0 +1,6 @@
+Flask
+PyAudio
+pydub
+SpeechRecognition
+tensorflow
+uwsgi
