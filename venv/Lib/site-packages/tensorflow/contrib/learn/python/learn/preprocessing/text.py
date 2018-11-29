@@ -13,12 +13,7 @@
 # limitations under the License.
 # ==============================================================================
 
-"""Implements a number of text preprocessing utilities (deprecated).
-
-This module and all its submodules are deprecated. See
-[contrib/learn/README.md](https://www.tensorflow.org/code/tensorflow/contrib/learn/README.md)
-for migration instructions.
-"""
+"""Implements a number of text preprocessing utilities."""
 
 from __future__ import absolute_import
 from __future__ import division
@@ -29,7 +24,6 @@ import numpy as np
 import six
 
 from tensorflow.python.platform import gfile
-from tensorflow.python.util.deprecation import deprecated
 
 from .categorical_vocabulary import CategoricalVocabulary  # pylint: disable=g-bad-import-order
 
@@ -44,7 +38,6 @@ TOKENIZER_RE = re.compile(r"[A-Z]{2,}(?![a-z])|[A-Z][a-z]+(?=[A-Z])|[\'\w\-]+",
                           re.UNICODE)
 
 
-@deprecated(None, 'Please use tensorflow/transform or tf.data.')
 def tokenizer(iterator):
   """Tokenizer generator.
 
@@ -58,16 +51,9 @@ def tokenizer(iterator):
     yield TOKENIZER_RE.findall(value)
 
 
-@deprecated(None, 'Please use tensorflow/transform or tf.data.')
 class ByteProcessor(object):
-  """Maps documents into sequence of ids for bytes.
+  """Maps documents into sequence of ids for bytes."""
 
-  THIS CLASS IS DEPRECATED. See
-  [contrib/learn/README.md](https://www.tensorflow.org/code/tensorflow/contrib/learn/README.md)
-  for general migration instructions.
-  """
-
-  @deprecated(None, 'Please use tensorflow/transform or tf.data.')
   def __init__(self, max_document_length):
     self.max_document_length = max_document_length
 
@@ -122,14 +108,8 @@ class ByteProcessor(object):
 
 
 class VocabularyProcessor(object):
-  """Maps documents to sequences of word ids.
+  """Maps documents to sequences of word ids."""
 
-  THIS CLASS IS DEPRECATED. See
-  [contrib/learn/README.md](https://www.tensorflow.org/code/tensorflow/contrib/learn/README.md)
-  for general migration instructions.
-  """
-
-  @deprecated(None, 'Please use tensorflow/transform or tf.data.')
   def __init__(self,
                max_document_length,
                min_frequency=0,

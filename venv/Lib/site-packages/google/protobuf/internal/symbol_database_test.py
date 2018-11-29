@@ -60,7 +60,6 @@ class SymbolDatabaseTest(unittest.TestCase):
     db.RegisterMessage(unittest_pb2.TestAllTypes.RepeatedGroup)
     db.RegisterEnumDescriptor(unittest_pb2.ForeignEnum.DESCRIPTOR)
     db.RegisterEnumDescriptor(unittest_pb2.TestAllTypes.NestedEnum.DESCRIPTOR)
-    db.RegisterServiceDescriptor(unittest_pb2._TESTSERVICE)
     return db
 
   def testGetPrototype(self):
@@ -110,13 +109,7 @@ class SymbolDatabaseTest(unittest.TestCase):
         self._Database().pool.FindMessageTypeByName(
             'protobuf_unittest.TestAllTypes.NestedMessage').full_name)
 
-  def testFindServiceByName(self):
-    self.assertEqual(
-        'protobuf_unittest.TestService',
-        self._Database().pool.FindServiceByName(
-            'protobuf_unittest.TestService').full_name)
-
-  def testFindFileContainingSymbol(self):
+  def testFindFindContainingSymbol(self):
     # Lookup based on either enum or message.
     self.assertEqual(
         'google/protobuf/unittest.proto',

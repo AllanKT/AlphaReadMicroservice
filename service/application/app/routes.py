@@ -31,6 +31,7 @@ def image():
 		user = request.get_json()
 	except:
 		return jsonify({'data': 'Request body is invalid. Please send the fields correctly in String format'})
+	
 
 	try:
 		image = ImageRecognition()

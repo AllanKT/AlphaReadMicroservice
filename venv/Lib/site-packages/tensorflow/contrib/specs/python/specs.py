@@ -19,11 +19,13 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+
+import inspect
+
 from six import exec_
 from tensorflow.contrib.specs.python import params_ops
 from tensorflow.contrib.specs.python import specs_lib
 from tensorflow.contrib.specs.python import specs_ops
-from tensorflow.python.util import tf_inspect
 
 
 def eval_params(params, environment=None):
@@ -42,8 +44,7 @@ def eval_params(params, environment=None):
   """
   specs_lib.check_keywords(params)
   bindings = {}
-  if environment:
-    bindings.update(environment)
+  if environment: bindings.update(environment)
   exec_(params, vars(params_ops), bindings)  # pylint: disable=exec-used
   return bindings
 
@@ -70,8 +71,7 @@ def eval_spec(spec, environment=None):
   """
   specs_lib.check_keywords(spec)
   bindings = {}
-  if environment:
-    bindings.update(environment)
+  if environment: bindings.update(environment)
   exec_(spec, vars(specs_ops), bindings)  # pylint: disable=exec-used
   return bindings
 
@@ -141,7 +141,7 @@ class LocalImport(object):
     self.names = names
 
   def __enter__(self):
-    self.frame = tf_inspect.currentframe()
+    self.frame = inspect.currentframe()
     bindings = self.frame.f_back.f_globals
     self.old = {k: bindings.get(k, None) for k in self.names.keys()}
     bindings.update(self.names)
@@ -151,9 +151,7 @@ class LocalImport(object):
     bindings = self.frame.f_back.f_globals
     bindings.update(self.old)
     for k, v in self.old.items():
-      if v is None:
-        del bindings[k]
+      if v is None: del bindings[k]
     del self.frame
-
 
 ops = LocalImport(specs_ops)

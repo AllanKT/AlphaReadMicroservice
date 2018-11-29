@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
+
 """Switch between Google or open source dependencies."""
 # Switch between Google and OSS dependencies
 USE_OSS = True

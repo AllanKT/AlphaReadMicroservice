@@ -22,11 +22,8 @@ from tensorflow.core.framework import device_attributes_pb2
 from tensorflow.python import pywrap_tensorflow
 
 
-def list_local_devices(session_config=None):
+def list_local_devices():
   """List the available devices available in the local process.
-
-  Args:
-    session_config: a session config proto or None to use the default config.
 
   Returns:
     A list of `DeviceAttribute` protocol buffers.
@@ -36,7 +33,4 @@ def list_local_devices(session_config=None):
     m.ParseFromString(pb_str)
     return m
 
-  return [
-      _convert(s)
-      for s in pywrap_tensorflow.list_devices(session_config=session_config)
-  ]
+  return [_convert(s) for s in pywrap_tensorflow.list_devices()]

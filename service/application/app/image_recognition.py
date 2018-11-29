@@ -24,7 +24,7 @@ class ImageRecognition(object):
 		return 'imagem salva com sucesso'
 
 	def classifier(self):
-		return label.execute()
+		return app.label.execute()
 
 	def getObjeto(self, id = str):
 		return self.objetos[id]

@@ -67,12 +67,11 @@ import collections
 import six
 
 from google.protobuf import descriptor
-from google.protobuf import descriptor_pool
 from google.protobuf import message
 from google.protobuf import text_format
 
 
-def assertProtoEqual(self, a, b, check_initialized=True,  # pylint: disable=invalid-name
+def assertProtoEqual(self, a, b, check_initialized=True,
                      normalize_numbers=False, msg=None):
   """Fails with a useful error if a and b aren't equal.
 
@@ -81,17 +80,16 @@ def assertProtoEqual(self, a, b, check_initialized=True,  # pylint: disable=inva
 
   Args:
     self: googletest.TestCase
-    a: proto2 PB instance, or text string representing one.
-    b: proto2 PB instance -- message.Message or subclass thereof.
+    a: proto2 PB instance, or text string representing one
+    b: proto2 PB instance -- message.Message or subclass thereof
     check_initialized: boolean, whether to fail if either a or b isn't
-      initialized.
+      initialized
     normalize_numbers: boolean, whether to normalize types and precision of
       numbers before comparison.
-    msg: if specified, is used as the error message on failure.
+    msg: if specified, is used as the error message on failure
   """
-  pool = descriptor_pool.Default()
   if isinstance(a, six.string_types):
-    a = text_format.Merge(a, b.__class__(), descriptor_pool=pool)
+    a = text_format.Merge(a, b.__class__())
 
   for pb in a, b:
     if check_initialized:
@@ -101,10 +99,9 @@ def assertProtoEqual(self, a, b, check_initialized=True,  # pylint: disable=inva
     if normalize_numbers:
       NormalizeNumberFields(pb)
 
-  self.assertMultiLineEqual(
-      text_format.MessageToString(a, descriptor_pool=pool),
-      text_format.MessageToString(b, descriptor_pool=pool),
-      msg=msg)
+  self.assertMultiLineEqual(text_format.MessageToString(a),
+                            text_format.MessageToString(b),
+                            msg=msg)
 
 
 def NormalizeNumberFields(pb):
@@ -120,10 +117,10 @@ def NormalizeNumberFields(pb):
   Modifies pb in place. Recurses into nested objects.
 
   Args:
-    pb: proto2 message.
+    pb: proto2 message
 
   Returns:
-    the given pb, modified in place.
+    the given pb, modified in place
   """
   for desc, values in pb.ListFields():
     is_repeated = True
@@ -196,24 +193,14 @@ def ProtoEq(a, b):
   repeated fields, ie duplicates and order matter.
 
   Args:
-    a: A proto2 message or a primitive.
-    b: A proto2 message or a primitive.
+    a, b: proto2 messages or primitives
 
   Returns:
     `True` if the messages are equal.
   """
   def Format(pb):
-    """Returns a dictionary or unchanged pb bases on its type.
-
-    Specifically, this function returns a dictionary that maps tag
-    number (for messages) or element index (for repeated fields) to
-    value, or just pb unchanged if it's neither.
-
-    Args:
-      pb: A proto2 message or a primitive.
-    Returns:
-      A dict or unchanged pb.
-    """
+    """Returns a dictionary that maps tag number (for messages) or element index
+    (for repeated fields) to value, or just pb unchanged if it's neither."""
     if isinstance(pb, message.Message):
       return dict((desc.number, value) for desc, value in pb.ListFields())
     elif _IsMap(pb):

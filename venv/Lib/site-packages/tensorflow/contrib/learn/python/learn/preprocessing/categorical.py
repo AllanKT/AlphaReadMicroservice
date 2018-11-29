@@ -13,12 +13,7 @@
 # limitations under the License.
 # ==============================================================================
 
-"""Implements preprocessing transformers for categorical variables (deprecated).
-
-This module and all its submodules are deprecated. See
-[contrib/learn/README.md](https://www.tensorflow.org/code/tensorflow/contrib/learn/README.md)
-for migration instructions.
-"""
+"""Implements preprocessing transformers for categorical variables."""
 
 from __future__ import absolute_import
 from __future__ import division
@@ -26,8 +21,6 @@ from __future__ import print_function
 
 import math
 import numpy as np
-
-from tensorflow.python.util.deprecation import deprecated
 
 # pylint: disable=g-bad-import-order
 from . import categorical_vocabulary
@@ -38,16 +31,10 @@ from ..learn_io.data_feeder import setup_processor_data_feeder
 class CategoricalProcessor(object):
   """Maps documents to sequences of word ids.
 
-  THIS CLASS IS DEPRECATED. See
-  [contrib/learn/README.md](https://www.tensorflow.org/code/tensorflow/contrib/learn/README.md)
-  for general migration instructions.
-
   As a common convention, Nan values are handled as unknown tokens.
   Both float('nan') and np.nan are accepted.
   """
 
-  @deprecated(None, 'Please use tensorflow/transform or tf.data for sequence '
-              'processing.')
   def __init__(self, min_frequency=0, share=False, vocabularies=None):
     """Initializes a CategoricalProcessor instance.
 
